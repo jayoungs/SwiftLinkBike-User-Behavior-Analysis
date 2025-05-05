@@ -1,3 +1,2 @@
 # learn-github
-for learning
-make an edit
+for learning github
