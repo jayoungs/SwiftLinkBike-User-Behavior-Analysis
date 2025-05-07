@@ -70,7 +70,8 @@ FROM bikesharing_cyclist."202404_divvy_tripdata"
 ### 2-3. Inspect the Temporary Table and Validate Data
 
 I inspected the temporary table as below and found that there were other things to fix and clean:
-* 
+* 188 records out of 415,025 that the start time was equal to or later than the end time.
+* 10,195 records that took less than 
 
 
 <details>
@@ -82,6 +83,9 @@ I inspected the temporary table as below and found that there were other things 
 SELECT *
 FROM temp_table
 LIMIT 10;
+
+SELECT COUNT(*)
+FROM temp_table;
 
 -- check the range of day_of_week is correct:
 SELECT COUNT(*)
