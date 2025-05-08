@@ -18,7 +18,7 @@ I installed [Postgres.app](https://postgresapp.com) to run PostgreSQL on MacOS s
 ### 1-3. Import data to PostgreSQL through DBeaver
 I imported the 12 csv files to PostgreSQL and ensured that the data type of `started_at`and `ended-at` is timestamp.
 
-| **Column** | **Data Type** | **Note** |
+| **Column** | **Data Type** | **Description** |
 |:-------|:----------|:----------|
 |ride_id |varchar    |prmary key|
 |rideable_type|varchar|values: classic_bike, electric_bike, electric_scooter|
@@ -70,9 +70,8 @@ FROM bikesharing_cyclist."202404_divvy_tripdata"
 ### 2-3. Inspect the Temporary Table and Validate Data
 
 I inspected the temporary table as below and found that there were other things to fix and clean:
-* 188 records out of 415,025 that the start time was equal to or later than the end time.
-* 10,195 records that took less than 
-
+* 188 rides out of 415,025 that their start time was equal to or later than the end time.
+* 10,195 rides that took less than 1 minute and 18,782 that took less than 2 minutes.
 
 <details>
 <summary>Click to expand</summary>
@@ -123,9 +122,106 @@ WHERE ride_length < '00:02:00.000';
 
 </details>
 
-> **Change Log**
-> Deleted: `start_station_name`, `start_station_id`, `end_station_name`, `end_station_id`, `start_lat`, `start_lng`, `end_lat`, and `end_lng` columns
+These records could have been caused by system or user error or some other reasons. I decided to remove records with start time equal to later than end time and less than 1 minute ride duration.
+
+> **Change Summary**
+> Deleted:
+> * `start_station_name`, `start_station_id`, `end_station_name`, `end_station_id`, `start_lat`, `start_lng`, `end_lat`, and `end_lng` columns
+> * records with start time equal to later than end time
+> * records with less than 1 minute ride duration.
 > Added: `ride_length`, `ride_month`, `day_of_week`, `ride_hour`
+
+
+### 2-4. Create clean datasets for each month
+
+I created a clean table for April 2024 as below:
+
+<details>
+<summary>Click to expand</summary>
+
+```sql
+
+DROP TABLE IF EXISTS bikesharing_cyclist.clean_202404;
+CREATE TABLE bikesharing_cyclist.clean_202404 AS (
+WITH  t1 AS (
+SELECT 
+  ride_id,
+  rideable_type,
+  started_at,
+  ended_at,
+  (ended_at - started_at) AS ride_length, 
+  EXTRACT(MONTH FROM started_at) AS ride_month,
+  EXTRACT(DOW FROM started_at) AS day_of_week, 
+  EXTRACT(HOUR FROM started_at) AS hour_of_day,
+  member_casual
+FROM bikesharing_cyclist."202404_divvy_tripdata"
+WHERE started_at < ended_at
+),
+t2 AS (
+SELECT *
+FROM t1
+WHERE ride_length >= '1 minute'
+)
+SELECT *
+FROM t2
+);
+
+```
+
+</details>
+
+The number of records reduced to 404,830 from 415,025. I inspected the dataset and confirmed that the records with the above two conditions were completely removed.
+
+I then inpected datasets for the rest of the months and created the cleaned ones in the same way.
+
+### 2-5. Combine 12 Tables
+Using `UNION ALL`, I combined the 12 tables all together. The completed table was confirmed to contain 5,650,799 records without duplicates.
+
+<details>
+<summary>Click to expand</summary>
+
+```sql
+
+DROP TABLE IF EXISTS complete_table;
+CREATE TEMP TABLE complete_table AS (
+SELECT *
+FROM bikesharing_cyclist.clean_202404 dt 
+UNION ALL
+SELECT *
+FROM bikesharing_cyclist.clean_202405 dt 
+UNION ALL
+SELECT *
+FROM bikesharing_cyclist.clean_202406 dt 
+UNION ALL
+SELECT *
+FROM bikesharing_cyclist.clean_202407 dt 
+UNION ALL
+SELECT *
+FROM bikesharing_cyclist.clean_202408 dt 
+UNION ALL
+SELECT *
+FROM bikesharing_cyclist.clean_202409 dt 
+UNION ALL
+SELECT *
+FROM bikesharing_cyclist.clean_202410 dt
+UNION ALL
+SELECT *
+FROM bikesharing_cyclist.clean_202411 dt
+UNION ALL 
+SELECT *
+FROM bikesharing_cyclist.clean_202412 dt
+UNION ALL
+SELECT *
+FROM bikesharing_cyclist.clean_202501 dt 
+UNION ALL
+SELECT *
+FROM bikesharing_cyclist.clean_202502 dt 
+UNION ALL
+SELECT *
+FROM bikesharing_cyclist.clean_202503 dt 
+);
+
+```
 
 ## 3. Analyze Data
 
