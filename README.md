@@ -125,14 +125,16 @@ WHERE ride_length < '00:02:00.000';
 These records could have been caused by system or user error or some other reasons. I decided to remove records with start time equal to later than end time and less than 1 minute ride duration.
 
 > **Change Summary**
+> 
 > Deleted:
 > * `start_station_name`, `start_station_id`, `end_station_name`, `end_station_id`, `start_lat`, `start_lng`, `end_lat`, and `end_lng` columns
 > * records with start time equal to later than end time
 > * records with less than 1 minute ride duration.
+>   
 > Added: `ride_length`, `ride_month`, `day_of_week`, `ride_hour`
 
 
-### 2-4. Create clean datasets for each month
+### 2-4. Create clean tables for each month
 
 I created a clean table for April 2024 as below:
 
