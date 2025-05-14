@@ -10,7 +10,7 @@ Cyclistic, a fictional bike-share company, has 5,824 bicycles and 692 docking st
 ## 1. Prepare Data
 
 ### 1-1. About Data
-The Cyclistic's historical trip data is available to download [here](https://divvy-tripdata.s3.amazonaws.com/index.html). In this case study, monthly trip data in csv format for the previous 12 months, April 2024 through March 2025, was to be analyzed. Tthe April 2024 file alone contained 415,025 rows so it seemed desirable to use SQL instead of Excel to process and analyze the combined data for the 12 months. The combined dataset turned out to have more than 5.7 million records.
+The Cyclistic's historical trip data is available to download [here](https://divvy-tripdata.s3.amazonaws.com/index.html). In this case study, monthly trip data in csv format for the previous 12 months, April 2024 through March 2025, was to be analyzed. Tthe April 2024 file alone contained 415,025 rows so it seemed desirable to use SQL instead of Excel to process and analyze the combined data for the 12 months. The combined dataset was expected to have 5.7+ million records.
 
 ### 1-2. Install PostgreSQL and Set Up
 I installed [Postgres.app](https://postgresapp.com) to run PostgreSQL on MacOS smoothly and [DBeaver](https://dbeaver.io), a free, open-source universal database tool, to connect to my PostgreSQL. Previously, when I downloaded the PostgresSQL server and pgAdmin through [its website](https://www.postgresql.org/download/macosx/), they did not operate properly on MacOS and I ran into a "connection failed" error almost every time I tried opening them.
@@ -128,7 +128,7 @@ These records could have been caused by system or user error or some other reaso
 > 
 > Deleted:
 > * `start_station_name`, `start_station_id`, `end_station_name`, `end_station_id`, `start_lat`, `start_lng`, `end_lat`, and `end_lng` columns
-> * records with start time equal to later than end time
+> * records with start time equal to or later than end time
 > * records with less than 1 minute ride duration.
 >   
 > Added: `ride_length`, `ride_month`, `day_of_week`, `ride_hour`
@@ -176,8 +176,8 @@ The number of records reduced to 404,830 from 415,025. I inspected the dataset a
 
 I then inpected datasets for the rest of the months and created the cleaned ones in the same way.
 
-### 2-5. Combine 12 Tables
-Using `UNION ALL`, I combined the 12 tables all together. The completed table was confirmed to contain 5,650,799 records without duplicates.
+### 2-5. Combine 12 Tables 
+Using `UNION ALL`, I combined the 12 tables all together. *The templory completed table* was confirmed to contain *5,650,799 records* without duplicates.
 
 <details>
 <summary>Click to expand</summary>
@@ -187,7 +187,7 @@ Using `UNION ALL`, I combined the 12 tables all together. The completed table wa
 DROP TABLE IF EXISTS complete_table;
 CREATE TEMP TABLE complete_table AS (
 SELECT *
-FROM bikesharing_cyclist.clean_202404 dt 
+FROM bikesharing_cyclist.clean_202404 dt
 UNION ALL
 SELECT *
 FROM bikesharing_cyclist.clean_202405 dt 
@@ -225,9 +225,13 @@ FROM bikesharing_cyclist.clean_202503 dt
 
 ```
 
-## 3. Analyze Data
+## 3. Summary of Key Insights
+* Members made more trips and had shorter trip duration compared to casual users. In other words, members ride more often and for a short distance.
+* Both of the groups preferred classic bikes rather than elec
 
 ## 4. Visualize Data
+
+
 
 ## Takeaways
 
