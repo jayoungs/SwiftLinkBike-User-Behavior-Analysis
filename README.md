@@ -1,6 +1,6 @@
-# Cyclistic User Behavior Analysis
+<img align="left" width="30%" height="30%" alt="Logo wihtout background" src="https://github.com/user-attachments/assets/7280f0e3-9efd-403c-90af-3958c288b4e3" /> 
 
-*This case study was completed as a capstone project of the Google Data Analytics Certificate.*  
+*This case study was completed as a capstone project of the Google Data Analytics Certificate .*  
 
 ## Introduction
 Cyclistic, a fictional bike-share company, has 5,824 bicycles and 692 docking stations running across Chicago. It offers three pricing plans: single-ride passes, full-day passes, and annual memberships. Their users are more likely to ride for leisure, but about 30% use the bikes to commute to work each day. Based on a belief that the company's future success depends on maximizing the number of annual memberships, the director of marketing wants to understand how casual riders - those who purchased single-ride or full-day passes - and annual members use Cyclistic bikes differently to start designing a new marketing strategy to convert casual riders into annual members instead of targeting new customers. The stakeholders involve the marketing analytics team and executive team.
