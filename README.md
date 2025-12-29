@@ -1,40 +1,47 @@
-<img align="left" width="30%" height="30%" alt="Logo wihtout background" src="https://github.com/user-attachments/assets/7280f0e3-9efd-403c-90af-3958c288b4e3" /> 
+<img align="left" width="25%" height="25%" alt="Logo wihtout background" src="https://github.com/user-attachments/assets/7280f0e3-9efd-403c-90af-3958c288b4e3" /> </br>
+Cyclistic, a sample bike-share company, launched a successful bike-share offering in 2016. Since then, the program has grown to a fleet of 5,824 bicycles that are geotracked and locked into a network of 692 stations across Chicago. </br>  
+Until now, Cyclistic’s marketing strategy relied on building general awareness and appealing to broad consumer segments, by offering the flexibility of three pricing plans: single-ride passes, full-day passes, and annual memberships. Now, finance analysts have concluded that annual members are much more profitable than casual riders, and the director of marketing also believes that there is a solid growth opportunity to convert casual riders into members rather than continuing to target all-new customers.
+</br>
+</br>
+**Stakeholder Questions:** 
+* How do annual members and casual riders use Cyclistic bikes differently?
+* Are there different temporal or spatial patterns between two groups?
+  
+**Key Metrics:** Rides • Trip Duration • Long-Ride Frequency
 
-*This case study was completed as a capstone project of the Google Data Analytics Certificate .*  
+**Table of Contents** 
 
-## Introduction
-Cyclistic, a fictional bike-share company, has 5,824 bicycles and 692 docking stations running across Chicago. It offers three pricing plans: single-ride passes, full-day passes, and annual memberships. Their users are more likely to ride for leisure, but about 30% use the bikes to commute to work each day. Based on a belief that the company's future success depends on maximizing the number of annual memberships, the director of marketing wants to understand how casual riders - those who purchased single-ride or full-day passes - and annual members use Cyclistic bikes differently to start designing a new marketing strategy to convert casual riders into annual members instead of targeting new customers. The stakeholders involve the marketing analytics team and executive team.
+## About Data and Tools
 
- > Key Question: How Do Annual Members and Casual Riders Use Cyclistic Bikes Differently?
-
-## 1. Prepare Data
-
-### 1-1. About Data
-The Cyclistic's historical trip data is available to download [here](https://divvy-tripdata.s3.amazonaws.com/index.html). In this case study, monthly trip data in csv format for the previous 12 months, April 2024 through March 2025, was to be analyzed. Tthe April 2024 file alone contained 415,025 rows so it seemed desirable to use SQL instead of Excel to process and analyze the combined data for the 12 months. The combined dataset was expected to have 5.7+ million records.
-
-### 1-2. Install PostgreSQL and Set Up
-I installed [Postgres.app](https://postgresapp.com) to run PostgreSQL on MacOS smoothly and [DBeaver](https://dbeaver.io), a free, open-source universal database tool, to connect to my PostgreSQL. Previously, when I downloaded the PostgresSQL server and pgAdmin through [its website](https://www.postgresql.org/download/macosx/), they did not operate properly on MacOS and I ran into a "connection failed" error almost every time I tried opening them.
-
-### 1-3. Import data to PostgreSQL through DBeaver
-I imported the 12 csv files to PostgreSQL and ensured that the data type of `started_at`and `ended-at` is timestamp.
-
+#### About Data
+The dataset comprises 12 tables for each month for the most recent 12 months from April 2024 through March 2025, which were combined into a single table containing **+5.7M records** for this analysis.
+ 
+<details>
+<summary>Data Dictionary: Click to expand</summary> 
+	 
 | **Column** | **Data Type** | **Description** |
 |:-------|:----------|:----------|
-|ride_id |varchar    |prmary key|
+|ride_id |varchar    |primary key|
 |rideable_type|varchar|values: classic_bike, electric_bike, electric_scooter|
-|started_at|varchar -> timestamp|start time|
-|ended_at|varchar -> timestamp|end time|
+|started_at|timestamp|start time|
+|ended_at|timestamp|end time|
 |start_station_name|varchar| |
 |start_station_id|varchar| |
 |end_station_name|varchar| |
 |end_station_id|varchar| |
-|start_lat|real -> numeric|start station latitude|
-|start_lng|real -> numeric|start station longitude|
-|end_lat|real -> numeric |end station latitude|
-|end_lng|real -> numeric |end station longitude|
-|member_casual|varchar    |values: casual, member|
+|start_lat|numeric|start station latitude|
+|start_lng|numeric|start station longitude|
+|end_lat|numeric|end station latitude|
+|end_lng|numeric|end station longitude|
+|member_casual|varchar|values: casual, member|
+	
+</details>
 
-## 2. Clean and Manipulate Data
+**Tools Used**
+* SQL for data cleaning and analysis: **Postgres.app** installed to run PostgreSQL on MacOS smoothly and **DBeaver**(a free, open-source universal database tool) to connect and import data to PostgreSQL. 
+* Tableau for visualization and dashboards
+
+## Data Cleaning and Validation
 
 ### 2-1. Check Duplicates and Missing Values
 I started with the April 2024 table to clean one table at a time before combining them all together.
@@ -225,15 +232,17 @@ FROM bikesharing_cyclist.clean_202503 dt
 
 ```
 
-## 3. Summary of Key Insights
+## Executive Summary
 * Members made more trips and had shorter trip duration compared to casual users. In other words, members ride more often and for a short distance.
 * Both of the groups preferred classic bikes rather than elec
 
-## 4. Visualize Data
+## Deep Dive Insights
 
 
 
-## Takeaways
+## Recommendation
+
+## Caveat
 
 ```
 markdown edit
