@@ -44,7 +44,7 @@ The dataset comprises 12 monthly tables covering the period from April 2024 thro
 	* [SQL queries for Exploratory Data Analysis](https://github.com/jayoungs/SwiftLinkBike-User-Behavior-Analysis/blob/main/02_EDA.sql)
 * Google Sheets: Used for pivot tables and initial charting.
 * Google Slides: Final presentation with dynamic charts linked to Google Sheets.
-* Tableau: Used for geospatial visualizations and heatmaps.
+* Tableau: Used for geospatial visualizations.
 
 ## Presentation Sample
 
